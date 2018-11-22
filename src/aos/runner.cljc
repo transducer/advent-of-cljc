@@ -5,6 +5,8 @@
    [aos.y2017.d01]
    [aos.y2017.d02]))
 
+(println "instrument" (instrument))
+
 (defn planck-env? []
   #?(:cljs (exists? js/PLANCK_EXIT_WITH_VALUE)
      :clj false))

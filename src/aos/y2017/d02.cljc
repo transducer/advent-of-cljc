@@ -3,7 +3,10 @@
    [aos.utils :as u]
    [aos.y2017.input :refer [input-d02] :rename {input-d02 input}]
    [clojure.test :refer [deftest is testing]]
-   [clojure.string :as str]))
+   [clojure.string :as str]
+   [speculative.instrument :refer [instrument]]))
+
+(println "insta" (instrument))
 
 ;;;; Solution 001
 
@@ -92,6 +95,9 @@
   (solve1 [input]))
 
 (defn solve2 [lines]
+  (println "should be error")
+  (println (instrument))
+  (merge 1)
   (letfn [(line-div [line]
             (first
              (for [[x & ys] (->> (line-nums line)
