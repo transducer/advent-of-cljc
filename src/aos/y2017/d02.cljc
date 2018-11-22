@@ -4,9 +4,12 @@
    [aos.y2017.input :refer [input-d02] :rename {input-d02 input}]
    [clojure.test :refer [deftest is testing]]
    [clojure.string :as str]
-   [speculative.instrument :refer [instrument]]))
+   ;; [speculative.instrument :refer [instrument]]
+   #_[clojure.spec.test.alpha :as stest]))
 
-(println "insta" (instrument))
+(println "in test ns enabled?" (deref #'clojure.spec.test.alpha/*instrument-enabled*))
+
+;; (println "insta" (instrument))
 
 ;;;; Solution 001
 
@@ -96,7 +99,9 @@
 
 (defn solve2 [lines]
   (println "should be error")
-  (println (instrument))
+  #_(println (instrument))
+  #_(stest/instrument)
+  (println "enabled?" (deref #'clojure.spec.test.alpha/*instrument-enabled*))
   (merge 1)
   (letfn [(line-div [line]
             (first
@@ -115,12 +120,14 @@
 ;;;; Tests
 
 (deftest aos-y2017-d02-01-test
+  (println "in test d02-01 enabled?" (deref #'clojure.spec.test.alpha/*instrument-enabled*))
   (is (= 44887 (s01-p1)))
   (is (number? (s02-p1)))
   (is (number? (s03-p1)))
   )
 
 (deftest aos-y2017-d02-02-test
+  (println "in test d02-02 enabled?" (deref #'clojure.spec.test.alpha/*instrument-enabled*))
   (is (= 242 (s01-p2)))
   (is (number? (s02-p2)))
   (is (number? (s03-p2)))

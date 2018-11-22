@@ -1,17 +1,26 @@
 (ns aos.runner
   (:require
    [clojure.test :as t]
-   [speculative.instrument :refer [instrument]]
+
+   ;; [speculative.instrument]
+   [clojure.string :as str]
+   [speculative.core] ;; something is the matter with merge-with spec
+   [clojure.spec.alpha :as s]
+   [speculative.specs :as ss]
+   [speculative.set]
+   [speculative.string]
+   [speculative.test :refer [deftime ?]]
+
    [aos.y2017.d01]
    [aos.y2017.d02]))
 
-(println "instrument" (instrument))
+(clojure.spec.test.alpha/instrument)
 
-(defn planck-env? []
+#_(defn planck-env? []
   #?(:cljs (exists? js/PLANCK_EXIT_WITH_VALUE)
      :clj false))
 
-(defn exit
+#_(defn exit
   "Exit with the given status."
   [status]
   #?(:cljs
@@ -43,17 +52,19 @@
          (exit 1)
          (exit 0))))
    :clj
-   (defmethod clojure.test/report :summary [m]
+   nil #_(defmethod clojure.test/report :summary [m]
      (clojure.test/with-test-out
        (println "\nRan" (:test m) "tests containing"
                 (+ (:pass m) (:fail m) (:error m)) "assertions.")
        (println (:fail m) "failures," (:error m) "errors."))
-     (if-not (clojure.test/successful? m)
+     (when-not (clojure.test/successful? m)
        (exit 1)
-       (exit 0))))
+       #_(exit 0))))
 
 (defn -main [& args]
+  (println "enabled?" (deref #'clojure.spec.test.alpha/*instrument-enabled*))
   (t/run-tests 'aos.y2017.d01
-               'aos.y2017.d02))
+               'aos.y2017.d02)
+  (println "enabled?" (deref #'clojure.spec.test.alpha/*instrument-enabled*)))
 
 #?(:cljs (set! *main-cli-fn* -main))

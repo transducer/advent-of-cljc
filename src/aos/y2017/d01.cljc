@@ -3,9 +3,12 @@
    [aos.y2017.input :refer [input-d01] :rename {input-d01 input}]
    [aos.utils :as u]
    [clojure.test :refer [deftest is testing]]
-   [clojure.string :as str]))
+   [clojure.string :as str]
+   [clojure.spec.test.alpha]))
 
 ;;;; Solution 001
+
+(println "in test ns enabled?" (deref #'clojure.spec.test.alpha/*instrument-enabled*))
 
 (defn solution-001-01 []
   (reduce
@@ -55,6 +58,7 @@
 ;;;; Tests
 
 (deftest aos-y2017-d01-01-test
+  (println "in test d01-01 enabled?" (deref #'clojure.spec.test.alpha/*instrument-enabled*))
   (is (= 995 (solution-001-01)))
   (is (= 995 (solution-002-01))))
 
