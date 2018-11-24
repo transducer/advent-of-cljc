@@ -1,7 +1,7 @@
 (ns aos.runner
   (:require
-   [clojure.test :as t]
    [speculative.instrument :refer [instrument]]
+   [clojure.test :as t]
    [aos.y2017.d01]
    [aos.y2017.d02]))
 

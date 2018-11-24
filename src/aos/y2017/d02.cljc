@@ -3,7 +3,8 @@
    [aos.utils :as u]
    [aos.y2017.input :refer [input-d02] :rename {input-d02 input}]
    [clojure.test :refer [deftest is testing]]
-   [clojure.string :as str]))
+   [clojure.string :as str]
+   [clojure.spec.test.alpha]))
 
 ;;;; Solution 001
 
@@ -92,6 +93,7 @@
   (solve1 [input]))
 
 (defn solve2 [lines]
+  (println "ENABLED?" (deref #'clojure.spec.test.alpha/*instrument-enabled*))
   (letfn [(line-div [line]
             (first
              (for [[x & ys] (->> (line-nums line)
@@ -115,6 +117,7 @@
   )
 
 (deftest aos-y2017-d02-02-test
+  (println "ENABLED?" (deref #'clojure.spec.test.alpha/*instrument-enabled*))
   (is (= 242 (s01-p2)))
   (is (number? (s02-p2)))
   (is (number? (s03-p2)))
